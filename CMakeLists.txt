@@ -1,3 +1,5 @@
+# At the very top of CMakeLists.txt
+set(CMAKE_VERBOSE_MAKEFILE ON)
 cmake_minimum_required(VERSION 3.13)
 project(BambuStudio)
 
