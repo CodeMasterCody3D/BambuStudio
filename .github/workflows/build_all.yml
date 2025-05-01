@@ -3,34 +3,32 @@ name: Build all
 on:
   push:
     branches:
-     - main
+      - main
     paths:
-     - 'deps/**'
-     - 'src/**'
-     - '**/CMakeLists.txt'
-     - 'version.inc'
-     - 'bbl/**'
-     - 'resources/**'
-     - ".github/workflows/build_*.yml"
-
+      - 'deps/**'
+      - 'src/**'
+      - '**/CMakeLists.txt'
+      - 'version.inc'
+      - 'bbl/**'
+      - 'resources/**'
+      - ".github/workflows/build_*.yml"
   pull_request:
     branches:
-     - master
+      - master
     paths:
-     - 'deps/**'
-     - 'src/**'
-     - '**/CMakeLists.txt'
-     - 'version.inc'
-     - ".github/workflows/build_*.yml"
-     - 'BuildLinux.sh'
-     - 'build_win.bat'
-    
-  workflow_dispatch: # manual dispatch
-      inputs:
-        build-deps-only:
-            description: 'Only build dependencies (bypasses caching)'
-            type: boolean
-            default: false
+      - 'deps/**'
+      - 'src/**'
+      - '**/CMakeLists.txt'
+      - 'version.inc'
+      - ".github/workflows/build_*.yml"
+      - 'BuildLinux.sh'
+      - 'build_win.bat'
+  workflow_dispatch:
+    inputs:
+      build-deps-only:
+        description: 'Only build dependencies (bypasses caching)'
+        type: boolean
+        default: false
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
@@ -44,8 +42,13 @@ jobs:
       matrix:
         include:
           - os: ubuntu-22.04
+            arch: x86_64
           - os: ubuntu-24.04
+            arch: x86_64
+          - os: ubuntu-24.04-arm
+            arch: arm64
           - os: windows-latest
+            arch: x86_64
           - os: macos-13
             arch: x86_64
     uses: ./.github/workflows/build_check_cache.yml
