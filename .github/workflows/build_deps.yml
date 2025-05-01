@@ -52,7 +52,7 @@ jobs:
           mkdir -p deps/build_${{ inputs.arch }}/BambuStudio_dep_${{ inputs.arch }}
           cd deps/build_${{ inputs.arch }}
           cmake ../../deps -DDESTDIR=./BambuStudio_dep_${{ inputs.arch }}
-          make -j$(nproc)
+          make VERBOSE=1 -j$(nproc)
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
